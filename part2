@@ -52,8 +52,9 @@ int main (int argc, char **argv)
 //read argc for argument count
     int child_processes = 0;
     if (argc > 1) {
+    	long argument = strtol(argv[1], &end, 10);
        //assuming its a valid value, 1 2 or 4
-        child_processes = Size_of_matrix / num_procs;
+        child_processes = Size_of_matrix / argument;
     }
     
   
