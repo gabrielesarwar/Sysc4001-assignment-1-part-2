@@ -14,21 +14,6 @@
 
 long (*finalmatrix)[Size_of_matrix];
 
-/**
- *  this method is used to calculate the rows using a common algorith which i found online.
- */
-void row_multiplication (int firstrow, int desired_rows, long (*m)[Size_of_matrix] ,long (*n)[Size_of_matrix], long (*out)[Size_of_matrix])
-{
-    for (int i = firstrow; i < (firstrow + desired_rows); i++) {
-        for (int z = 0; z < Size_of_matrix; z++) {
-            out[i][z] = 0;
-            for (int j = 0; j < Size_of_matrix; j++) {
-                out[i][z] += m[i][j] * n[j][z];
-            }
-        }
-    }
-}
-
 void print_matrix (long (*matrix)[Size_of_matrix])
 {
     for (int i = 0; i < Size_of_matrix; i++) {
@@ -45,6 +30,22 @@ void print_matrix (long (*matrix)[Size_of_matrix])
 long time_interval (struct timeval *start, struct timeval *end)
 {
     return ((end->tv_sec * MICRO_SEC_TO_SEC + end->tv_usec) - (start->tv_sec * MICRO_SEC_TO_SEC + start->tv_usec));
+}
+
+
+/**
+ *  this method is used to calculate the rows using a common algorith which i found online.
+ */
+void row_multiplication (int firstrow, int desired_rows, long (*m)[Size_of_matrix] ,long (*n)[Size_of_matrix], long (*out)[Size_of_matrix])
+{
+    for (int i = firstrow; i < (firstrow + desired_rows); i++) {
+        for (int z = 0; z < Size_of_matrix; z++) {
+            out[i][z] = 0;
+            for (int j = 0; j < Size_of_matrix; j++) {
+                out[i][z] += m[i][j] * n[j][z];
+            }
+        }
+    }
 }
 
 int main (int argc, char **argv)
