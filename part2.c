@@ -59,11 +59,11 @@ int main (int argc, char **argv)
         exit(1);
     }
 
-    finalmatrix = shmat(shmid, NULL, 0);
-    if ((int)finalmatrix == -1) {
-        fprintf(stderr, "Failed to attach shared memory: %s\n", strerror(errno));
-        exit(1);
-    }
+    finalmatrix = shmat(shmid, (void *) 0, 0); 
+    if(finalmatrix == (void *) -1){
+		fprintf(stderr, "shmat failed\n");
+		exit(EXIT_FAILURE);
+	}
 
   //  test case matricees specified in manual
 	long matrix_1[Size_of_matrix][Size_of_matrix] = {
@@ -143,7 +143,15 @@ int main (int argc, char **argv)
     print_matrix(matrix_2);
  
     print_matrix(finalmatrix);
-    
+		
+    if (shmdt(finalmatrix)==-1){
+		fprintf(stderr, "shmdt failed\n");
+		exit(EXIT_FAILURE);
+	}
+    shmdt(finalmatrix); //mmemory
+
+}
+
     shmdt(finalmatrix); //mmemory
 
 }
