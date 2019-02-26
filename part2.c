@@ -78,8 +78,8 @@ int main (int argc, char **argv)
        {7, 3, 5, 7},
        {8, 6, 4, 2}};
   //calculate time passed like we did in labs
-    struct timeval start_time;
-    struct timeval end_time;
+    struct a start_time;
+    struct b end_time;
     gettimeofday(&start_time, NULL);
 			 
 //read argc for argument count
