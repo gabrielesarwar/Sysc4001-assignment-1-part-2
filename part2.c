@@ -12,9 +12,9 @@
 #define Size_of_matrix 4
 
 
-long (*finalmatrix)[Size_of_matrix];
+int (*finalmatrix)[Size_of_matrix];
 
-void print_matrix (long (*matrix)[Size_of_matrix])
+void print_matrix (int (*matrix)[Size_of_matrix])
 {
     for (int i = 0; i < Size_of_matrix; i++) {
         for (int j = 0; j < Size_of_matrix; j++) {
@@ -37,7 +37,7 @@ long time_interval (struct timeval *start, struct timeval *end)
 /**
  *  this method is used to calculate the rows using a common algorith which i found online.
  */
-void row_multiplication (int firstrow, int desired_rows, long (*m)[Size_of_matrix] ,long (*n)[Size_of_matrix], long (*out)[Size_of_matrix])
+void row_multiplication (int firstrow, int desired_rows, int (*m)[Size_of_matrix] ,int (*n)[Size_of_matrix], int (*out)[Size_of_matrix])
 {
     for (int i = firstrow; i < (firstrow + desired_rows); i++) {
         for (int z = 0; z < Size_of_matrix; z++) {
@@ -66,13 +66,13 @@ int main (int argc, char **argv)
 	}
 
   //  test case matricees specified in manual
-	long matrix_1[Size_of_matrix][Size_of_matrix] = {
+	int matrix_1[Size_of_matrix][Size_of_matrix] = {
 				{1, 2, 3, 4},
 				{5, 6, 7, 8},
 				{4, 3, 2, 1},
         {8, 7, 6, 5}};
 
-	long matrix_2[Size_of_matrix][Size_of_matrix] = {
+	int matrix_2[Size_of_matrix][Size_of_matrix] = {
        {1, 3, 5, 7},
        {2, 4, 6, 8},
        {7, 3, 5, 7},
@@ -151,8 +151,3 @@ int main (int argc, char **argv)
     shmdt(finalmatrix); //mmemory
 
 }
-
-    shmdt(finalmatrix); //mmemory
-
-}
-
