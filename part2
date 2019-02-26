@@ -50,7 +50,7 @@ long time_interval (struct timeval *start, struct timeval *end)
 int main (int argc, char **argv)
 {
 //read argc for argument count
-    int child_processes = 0;
+    int child_processes = 1;
     
     if (argc > 1) {
     char *end;
