@@ -13,7 +13,7 @@
 
 
 long (*finalmatrix)[Size_of_matrix];
-//the req functions to condense code
+
 void print_matrix (long (*matrix)[Size_of_matrix])
 {
     for (int i = 0; i < Size_of_matrix; i++) {
@@ -28,7 +28,7 @@ void print_matrix (long (*matrix)[Size_of_matrix])
 /**
  *  elapsed time method from the labs
  */
-long time_interval (struct a *start, struct b *end)
+long time_interval (struct timeval *start, struct timeval *end)
 {
     return ((end->tv_sec * MICRO_SEC_TO_SEC + end->tv_usec) - (start->tv_sec * MICRO_SEC_TO_SEC + start->tv_usec));
 }
@@ -52,7 +52,7 @@ void row_multiplication (int firstrow, int desired_rows, long (*m)[Size_of_matri
 int main (int argc, char **argv)
 {
 		
-		//memory stuff as labs 
+		//memory stuff as in labs
     int shmid = shmget((key_t)1234, sizeof(long) * Size_of_matrix * Size_of_matrix, 0666 | IPC_CREAT); 
     if (shmid == -1) {
         fprintf(stderr, "Failed to get shared memory: %s\n", strerror(errno));
@@ -65,7 +65,7 @@ int main (int argc, char **argv)
         exit(1);
     }
 
-  //  test case matricees
+  //  test case matricees specified in manual
 	long matrix_1[Size_of_matrix][Size_of_matrix] = {
 				{1, 2, 3, 4},
 				{5, 6, 7, 8},
@@ -78,11 +78,11 @@ int main (int argc, char **argv)
        {7, 3, 5, 7},
        {8, 6, 4, 2}};
   //calculate time passed like we did in labs
-    struct a start_time;
-    struct b end_time;
+    struct timeval start_time;
+		struct timeval end_time;
     gettimeofday(&start_time, NULL);
 			 
-//read argc for argument count
+			 //read argc for argument count
     int child_processes = 1;
     
     if (argc > 1) {
@@ -133,7 +133,7 @@ int main (int argc, char **argv)
    
     
     gettimeofday(&end_time, NULL); //get the total time now since multiplication shud be done
-
+	
     printf("Time passed: %d in nano secs \n", time_interval(&start_time, &end_time));
 
     printf("here is matrix 1, then 2, then the resulting multiplied matrix \n");
@@ -147,3 +147,4 @@ int main (int argc, char **argv)
     shmdt(finalmatrix); //mmemory
 
 }
+
