@@ -51,7 +51,9 @@ int main (int argc, char **argv)
 {
 //read argc for argument count
     int child_processes = 0;
+    
     if (argc > 1) {
+    char *end;
     	long argument = strtol(argv[1], &end, 10);
        //assuming its a valid value, 1 2 or 4
         child_processes = Size_of_matrix / argument;
@@ -70,7 +72,7 @@ int main (int argc, char **argv)
         exit(1);
     }
 
-    test case matricees
+  //  test case matricees
 	long matrix_1[Size_of_matrix][Size_of_matrix] = {
 				{1, 2, 3, 4},
 				{5, 6, 7, 8},
@@ -113,7 +115,7 @@ int main (int argc, char **argv)
     }
     
     //iterate trhough child processes
-    for (int i = 0; i < MATRIX_SIZE; i++) {
+    for (int i = 0; i < Size_of_matrix; i++) {
         waitpid(subprocesses[i], NULL, 0);
     }
    //---------------------------------------------------------------------------------------- 
