@@ -12,7 +12,7 @@
 #define Size_of_matrix 4
 
 
-long (*matrix)[Size_of_matrix];
+long (*finalmatrix)[Size_of_matrix];
 
 /**
  *  this method is used to calculate the rows using a common algorith which i found online.
@@ -56,6 +56,9 @@ int main (int argc, char **argv)
     char *end;
     	long argument = strtol(argv[1], &end, 10);
        //assuming its a valid value, 1 2 or 4
+       
+	
+	
         child_processes = Size_of_matrix / argument;
     }
     
@@ -66,8 +69,8 @@ int main (int argc, char **argv)
         exit(1);
     }
 
-    matrix = shmat(shmid, NULL, 0);
-    if ((int)matrix == -1) {
+    finalmatrix = shmat(shmid, NULL, 0);
+    if ((int)finalmatrix == -1) {
         fprintf(stderr, "Failed to attach shared memory: %s\n", strerror(errno));
         exit(1);
     }
@@ -100,16 +103,16 @@ int main (int argc, char **argv)
         } else if (subprocesses[i] == 0) {
           
             if (child_processes == 1) {
-                printf("working with first row");
+                printf("first row: %d\n", i);
             } else {
-                printf("working with multiple rows, i is: ", i);
+                printf(" multiple rows, i is: %d\n ", i);
                 for (int z = 1; z < (child_processes - 1); z++) {
                     printf(", %d", i + z);
                 }
                 printf("  %d\n", i + (child_processes - 1));
             }
             
-            row_multiplication(i, child_processes, matrix_1, matrix_2, matrix);
+            row_multiplication(i, child_processes, matrix_1, matrix_2, finalmatrix);
             exit(0);
         }
     }
@@ -119,7 +122,7 @@ int main (int argc, char **argv)
         waitpid(subprocesses[i], NULL, 0);
     }
    //---------------------------------------------------------------------------------------- 
-     shmdt(matrix);
+
 
     struct timeval end_time;
     
@@ -138,8 +141,8 @@ int main (int argc, char **argv)
     
     printf("result:\n");
     
-    print_matrix(matrix);
+    print_matrix(finalmatrix);
     
-    
+    shmdt(finalmatrix);
 
 }
