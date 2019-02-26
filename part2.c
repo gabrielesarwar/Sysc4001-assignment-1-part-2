@@ -28,7 +28,7 @@ void print_matrix (long (*matrix)[Size_of_matrix])
 /**
  *  elapsed time method from the labs
  */
-long time_interval (struct timeval *start, struct timeval *end)
+long time_interval (struct a *start, struct b *end)
 {
     return ((end->tv_sec * MICRO_SEC_TO_SEC + end->tv_usec) - (start->tv_sec * MICRO_SEC_TO_SEC + start->tv_usec));
 }
