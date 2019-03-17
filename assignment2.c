@@ -153,19 +153,7 @@ int main(){
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+   
         
         //fork 4 times, four children
         index = -1;
@@ -222,9 +210,11 @@ int main(){
                             shared_stuff->B[0] = shared_stuff->B[1];
                             shared_stuff->B[1] = temp;
                             
-                        }
-                        
-                        if (!semaphore_v(1)) exit(EXIT_FAILURE); //Semaphore 1 has been released
+                           if(debug)printf("Process P1: performed swapping\n");
+                    }else{
+                        if(debug)printf("Process P1: No swapping\n");
+                    }
+                    if(!semaphore_p(1)) exit(EXIT_FAILURE);
                         
                        
                         
@@ -241,11 +231,14 @@ int main(){
                             shared_stuff->B[1] = shared_stuff->B[2];
                             shared_stuff->B[2] = temp;
                             
-                        }
+                             if(debug)printf("Process P2: performed swapping\n");
+                    }else{
+                        if(debug)printf("Process P2: No swapping\n");
+                    }
+                    if(!semaphore_p(1)) exit(EXIT_FAILURE);
+                    if(!semaphore_p(2)) exit(EXIT_FAILURE);
                         
-                        if(!semaphore_p(1) || !semaphore_p(2)) exit(EXIT_FAILURE);
-                        
-                    } else if(index == 2) {
+            } else if(index == 2) {
                         
                         if(!semaphore_p(2) || !semaphore_p(3)) exit(EXIT_FAILURE);
                     
@@ -256,11 +249,14 @@ int main(){
                         shared_stuff->B[2] = shared_stuff->B[3];
                         shared_stuff->B[3] = temp;
                         
+                        if(debug)printf("Process P3: performed swapping\n");
+                    }else{
+                        if(debug)printf("Process P3: No swapping\n");
                     }
-                    
-                    if(!semaphore_p(2) || !semaphore_p(3)) exit(EXIT_FAILURE);
+                    if(!semaphore_p(2)) exit(EXIT_FAILURE);
+                    if(!semaphore_p(3)) exit(EXIT_FAILURE);
                         
-                    } else if(index == 3) {
+            } else if(index == 3) {
                         
                         //third paid
                         if(!semaphore_p(3)) exit(EXIT_FAILURE);
@@ -271,12 +267,13 @@ int main(){
                             temp = shared_stuff->B[3];
                             shared_stuff->B[3] = shared_stuff->B[4];
                             shared_stuff->B[4] = temp;
-                            
-                        }
-                        
-                        if(!semaphore_p(3)) exit(EXIT_FAILURE);
-                    
-                }
+                             if(debug)printf("Process P4: performed swapping\n");
+                    }else{
+                        if(debug)printf("Process P4: No swapping\n");
+                    }
+                    if(!semaphore_p(3)) exit(EXIT_FAILURE);
+                    if(!semaphore_p(4)) exit(EXIT_FAILURE);
+            }
                     
                     
         }
