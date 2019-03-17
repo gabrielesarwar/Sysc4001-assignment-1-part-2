@@ -56,6 +56,9 @@ int main(){
     int index;
     pid_t pid;
     int waitTIme;
+    int debug=0;
+    char input[30];
+    bool invalid = 0;
     
     srand((unsigned int)getpid());
     
@@ -93,6 +96,76 @@ int main(){
         shared_stuff->B[2] = 8;
         shared_stuff->B[3] = 2;
         shared_stuff->B[4] = 7;
+        
+        
+        
+        //user input stuff
+    do{
+        invalid = 0;
+        printf("do you want to access debug mode? type yes or no");
+        scanf("%s",userinput);
+        if(userinput[1] != '\0'){
+            invalid = 1;
+            printf("not a valid argument\n");
+        }
+        else if(userinput[0] == 'yes'){	//  debug mode on
+            debug = 1;
+        }
+        else if(userinput[0] == 'no'){	 
+            debug = 0;
+        }else{
+            invalid = 1;
+            printf("not a valid argument\n");
+        }
+    }while(invalid);
+    
+    //ask for the 5 integeres
+    printf("Enter 5 different integers\n");
+    
+    for(int i=0; i<5; i++){
+        int finished = 0;
+        do{
+            bool validinput = 1;
+            char numberinput[30];
+            printf("Enter integer : ");
+            scanf("%s", numberinput);
+            for(int b = 0;  numberinput[b] != '\0'; b++){
+                if(!isdigit(numberinput[b])){
+                    validinput = 0;
+                    break;
+                }
+            }
+            if(valid){	// convert to integer to see input
+                shared_stuff->B[i] = atoi(numberinput);
+                finished = 1;
+            }else{
+                printf("Invalid! try again\n");
+            }
+        }while(finished == 0);
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         //fork 4 times, four children
         index = -1;
