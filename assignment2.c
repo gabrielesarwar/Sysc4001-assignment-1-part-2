@@ -17,10 +17,7 @@
 #include <sys/sem.h>
 #include <stdbool.h>
 
-//#include "semun.h"
-//#include "com.h"
-//#include "semun.h"
-//#include "shm_com.h"
+#define ARRAY_SIZE 5
 
 static int semID[3]; //there will be three semaphores total, because theres three pairs of two array sections that need to be accessed
 
@@ -102,23 +99,13 @@ int main(){
     
     shared_stuff = (struct shared_use *)shared_memory;
     
-    //populate array
-    shared_stuff->B[0] = 5;
-    shared_stuff->B[1] = 6;
-    shared_stuff->B[2] = 8;
-    shared_stuff->B[3] = 2;
-    shared_stuff->B[4] = 7;
-    
-        printf("%d,%d,%d,%d,%d\n", shared_stuff->B[0], shared_stuff->B[1], shared_stuff->B[2], shared_stuff->B[3], shared_stuff->B[4]);
-    
-   
       //user input stuff
      char userinput[20];
      bool invalid = 0;
     
     do{
         invalid = 0;
-        printf("do you want to access debug mode? type y for yes or no for no");
+        printf("do you want to access debug mode? type y for yes or n for no\n");
         scanf("%s",userinput);
         if(userinput[1] != '\0'){
             invalid = 1;
@@ -131,33 +118,34 @@ int main(){
             debug = 0;
         }else{
             invalid = 1;
-            printf("not a valid argument\n");
+            printf("not a valid input\n");
         }
     }while(invalid);
     
-    //ask for the 5 integeres
-    printf("Enter 5 different integers\n");
+    /* user to give 5 numbers */
+    printf("Enter 5 distinct integers...\n");
     
-    for(int i=0; i<5; i++){
-        int finished = 0;
+    for(int k=0; k<ARRAY_SIZE; k++){
+        int complete = 0;
         do{
-            bool validinput = 1;
-            char numberinput[30];
-            printf("Enter integer : ");
-            scanf("%s", numberinput);
-            for(int b = 0;  numberinput[b] != '\0'; b++){
-                if(!isdigit(numberinput[b])){
-                    validinput = 0;
+            bool valid = 1;
+            char intInput[20];
+            printf("Enter the integer : ");
+            scanf("%s", intInput);
+            for(int m = 0;  intInput[m] != '\0'; m++){
+                if(!isdigit(intInput[m])){
+                    valid = 0;
                     break;
                 }
             }
-            if(validinput){	// convert to integer to see input
-                shared_stuff->B[i] = atoi(numberinput);
-                finished = 1;
+            if(valid){	// check if input an integer
+                shared_stuff->B[k] = atoi(intInput);
+                complete = 1;
             }else{
-                printf("Invalid! try again\n");
+                printf("not a valid input\n");
             }
-        }while(finished == 0);
+        }while(complete == 0);
+    }
     
       
     
@@ -185,7 +173,7 @@ int main(){
             exit(1);
             
         case 0:
-            printf("child\n");
+            
             //child processes
             //the while loop is essential because
             //you need to iterate multiple times, doing what I did last assignment wont work because that doesn't use a loop
@@ -310,7 +298,7 @@ int main(){
     }
     
     exit(EXIT_SUCCESS);
-}
+
 }
 
 
