@@ -180,7 +180,7 @@ int main(){
             //this is a bubble sort algorithm
             //using other algorithms might be an option, but would make it harder
             
-            //seperated for readability
+            //seperated for readability 
             
             
             
