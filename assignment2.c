@@ -17,7 +17,7 @@
 #include <sys/sem.h>
 #include <stdbool.h>
 
-#define ARRAY_SIZE 5
+#define ARRAY_MAX 5
 
 static int semID[3]; //there will be three semaphores total, because theres three pairs of two array sections that need to be accessed
 
@@ -100,7 +100,7 @@ int main(){
     shared_stuff = (struct shared_use *)shared_memory;
     
       //user input stuff
-     char userinput[20];
+     char userinput[30];
      bool invalid = 0;
     
     do{
@@ -111,7 +111,7 @@ int main(){
             invalid = 1;
             printf("not a valid argument\n");
         }
-        else if(userinput[0] == 'y'){	//  debug mode on
+        else if(userinput[0] == 'y'){	
             debug = 1;
         }
         else if(userinput[0] == 'n'){	 
@@ -122,24 +122,24 @@ int main(){
         }
     }while(invalid);
     
-    /* user to give 5 numbers */
-    printf("Enter 5 distinct integers...\n");
+    //userinput
+    printf("Enter 5 different integers\n");
     
-    for(int k=0; k<ARRAY_SIZE; k++){
+    for(int a=0; a<ARRAY_MAX; a++){
         int complete = 0;
         do{
-            bool valid = 1;
-            char intInput[20];
+            bool validinput = 1;
+            char intInput[30];
             printf("Enter the integer : ");
             scanf("%s", intInput);
-            for(int m = 0;  intInput[m] != '\0'; m++){
-                if(!isdigit(intInput[m])){
-                    valid = 0;
+            for(int v = 0;  intInput[v] != '\0'; v++){
+                if(!isdigit(intInput[v])){ //check to make sure its not a string
+                    validinput = 0;
                     break;
                 }
             }
-            if(valid){	// check if input an integer
-                shared_stuff->B[k] = atoi(intInput);
+            if(validinput){	
+                shared_stuff->B[a] = atoi(intInput);
                 complete = 1;
             }else{
                 printf("not a valid input\n");
